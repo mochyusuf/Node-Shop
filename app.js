@@ -5,12 +5,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var bodyParser = require('body-parser');
+var expressHsb = require('express-handlebars');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.engine('.hbs',expressHsb({defaultLayout: 'layout', extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
