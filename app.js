@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var bodyParser = require('body-parser');
 var expressHsb = require('express-handlebars');
 var mongoose = require('mongoose');
+var session = require('express-session');
 
 var app = express();
 
@@ -22,7 +23,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+//Session
+app.use(session({secret: 'secret',resave: false, saveUninitialized: false}));
+
+var path = require ('path');
+app.use(express.static(path.join(__dirname + '.../public')));
 
 app.use('/', indexRouter);
 
