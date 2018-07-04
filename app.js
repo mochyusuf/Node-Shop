@@ -11,7 +11,7 @@ var mongoose = require('mongoose');
 
 var app = express();
 
-mongoose.connect('localhost:27017/shopping');
+mongoose.connect('mongodb://localhost:27017/shopping');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +40,14 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// Get Mongoose to use the global promise library
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected');
 });
 
 module.exports = app;
