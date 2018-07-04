@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
+var validator = require('express-validator');
 
 var app = express();
 
@@ -33,6 +34,9 @@ app.use(session({secret: 'secret',resave: false, saveUninitialized: false}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Validator
+app.use(validator());
 
 var path = require ('path');
 app.use(express.static(path.join(__dirname + '.../public')));
