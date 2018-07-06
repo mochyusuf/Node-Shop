@@ -14,7 +14,7 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 var validator = require('express-validator');
-var MongoStore = require('connect-mongo'){session};
+var MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 //Session
 app.use(session({
-  secret: 'secret',resave: false,
+  secret: 'secret',
   resave: false, 
   saveUninitialized: false,
   store: new MongoStore({mongooseConnection: mongoose.connection}),
