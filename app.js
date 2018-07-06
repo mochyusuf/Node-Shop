@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var userRouter = require('./routes/user');
+
 var bodyParser = require('body-parser');
 var expressHsb = require('express-handlebars');
 var mongoose = require('mongoose');
@@ -41,7 +43,13 @@ app.use(validator());
 var path = require ('path');
 app.use(express.static(path.join(__dirname + '.../public')));
 
+app.use(function(req, res, next){
+  res.locals.login = req.isAuthenticated();
+  next();
+});
+
 app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
