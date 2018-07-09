@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Produk = require('../models/produk');
 var Cart = require('../models/cart');
+var Order = require('../models/order');
 
 var base = 'localhost:3000';
 
@@ -72,9 +73,18 @@ router.post('/checkout', function(req,res, next){
       req.flash('error', err.message);
       return res.redirect('/checkout');
     }
-    req.flash('success', 'Success Buy');
-    req.cart = null;
-    res.redirect('/');
+    var order = new Order({
+      user: req.user,
+      cart:cart,
+      address: req.body.address,
+      name: req.body.name,
+      paymentId: charge.id
+    });
+    order.save(function(err, result){
+      req.flash('success', 'Success Buy');
+      req.cart = null;
+      res.redirect('/');
+    });
   });
 })
 
