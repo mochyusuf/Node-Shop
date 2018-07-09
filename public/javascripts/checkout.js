@@ -17,7 +17,6 @@ $form.submit(function(event){
 function stripeResponseHandler(status, response) {
     console.log(response);
     if (response.error) { // Problem!
-        console.log('XXX');
       // Show the errors on the form
       $('#charge-error').text(response.error.message);
       $('#charge-error').removeClass('hidden');
